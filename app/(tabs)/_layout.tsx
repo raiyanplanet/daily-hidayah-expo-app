@@ -1,45 +1,109 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import React, { useContext } from "react";
+import { ThemeContext } from "../theme/ThemeContext";
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const _layout = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { theme, colors } = useContext(ThemeContext);
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
+        tabBarActiveTintColor: colors.accent,
+        tabBarInactiveTintColor: colors.textSecondary,
+        tabBarStyle: {
+          backgroundColor: colors.card,
+          borderTopWidth: 0,
+
+          height: 85,
+          paddingBottom: 20,
+          paddingTop: 10,
+          shadowColor: theme === "dark" ? "#000" : "#000",
+          shadowOffset: {
+            width: 0,
+            height: -2,
           },
-          default: {},
-        }),
+          shadowOpacity: 0.1,
+          shadowRadius: 3.84,
+          elevation: 5,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "600",
+          marginTop: 4,
+        },
+        headerStyle: {
+          backgroundColor: colors.accent,
+
+          shadowColor: "transparent",
+        },
+        headerTintColor: colors.card,
+        headerTitleStyle: {
+          fontWeight: "700",
+          fontSize: 18,
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Home",
+          headerTitle: "Islamic App",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "home" : "home-outline"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
+
       <Tabs.Screen
-        name="explore"
+        name="prayer"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Prayer",
+          headerTitle: "Prayer Times",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "moon" : "moon-outline"}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="qibla"
+        options={{
+          title: "Qibla",
+          headerTitle: "Qibla Direction",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "compass" : "compass-outline"}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          headerTitle: "My Profile",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "person" : "person-outline"}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
     </Tabs>
   );
-}
+};
+
+export default _layout;
