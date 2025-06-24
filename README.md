@@ -1,50 +1,164 @@
-# Welcome to your Expo app 👋
+# Daily Hidayah - Islamic App 📱🕌
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<div align="center">
+  <img src="./assets/images/logo.png" alt="Daily Hidayah Logo" width="200" height="200">
+  <br>
+  <h3>Your Daily Companion for Islamic Practices</h3>
+</div>
 
-## Get started
+---
 
-1. Install dependencies
+## 🌟 About Daily Hidayah
 
+Daily Hidayah is a comprehensive Islamic mobile application built with React Native and Expo, designed to help Muslims maintain their daily spiritual practices. The app provides prayer times, Quran reading, tasbih counter, duas, and more in a beautiful, user-friendly interface with both light and dark themes.
+
+## ✨ Features
+
+### 🕌 Prayer Times & Qibla
+- **Real-time Prayer Times**: Accurate prayer times with countdown timers
+- **Prayer Notifications**: Never miss a prayer with timely reminders
+- **Qibla Direction**: Find the direction of the Kaaba from anywhere
+- **Arabic Names**: All prayers displayed with their Arabic names and descriptions
+
+### 📿 Tasbih Counter
+- **Digital Tasbih**: Count your dhikr with a beautiful circular progress indicator
+- **Progress Tracking**: Visual progress bar showing your daily tasbih goals
+- **Haptic Feedback**: Tactile feedback for each count
+- **Reset Functionality**: Easy reset to start fresh
+
+### 📖 Quran & Islamic Content
+- **Quran Reading**: Access to the Holy Quran with beautiful typography
+- **Daily Duas**: Curated collection of authentic duas for daily use
+- **Dhikr Collection**: Comprehensive collection of Islamic remembrances
+- **Reflection Section**: Daily Islamic content that changes hourly
+
+### 🎨 User Experience
+- **Dark/Light Theme**: Toggle between themes for comfortable reading
+- **Modern UI**: Clean, intuitive interface with smooth animations
+- **Responsive Design**: Optimized for all screen sizes
+- **Offline Support**: Core features work without internet connection
+
+### 👤 Profile & Settings
+- **Personal Dashboard**: Track your daily Islamic activities
+- **Theme Preferences**: Customize your app appearance
+- **Settings Management**: Easy access to app configurations
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+- Expo CLI
+- iOS Simulator (for iOS development) or Android Studio (for Android development)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd islamic-app
+   ```
+
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. **Start the development server**
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. **Run on your preferred platform**
+   ```bash
+   # For iOS
+   npx expo run:ios
+   
+   # For Android
+   npx expo run:android
+   
+   # For web
+   npx expo run:web
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📱 App Structure
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+app/
+├── (tabs)/                 # Main tab navigation
+│   ├── index.tsx          # Home screen with prayer times & tasbih
+│   ├── prayer.tsx         # Detailed prayer times screen
+│   ├── qibla.tsx          # Qibla direction finder
+│   └── profile.tsx        # User profile & settings
+├── screens/               # Additional screens
+│   ├── tasbih.tsx         # Full tasbih counter
+│   ├── quran.tsx          # Quran reading interface
+│   ├── duas.tsx           # Duas collection
+│   ├── dhikr.tsx          # Dhikr collection
+│   └── adzan.tsx          # Adhan player
+├── constants/             # App constants and data
+├── theme/                 # Theme context and styling
+└── _layout.tsx           # Root layout configuration
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🛠️ Built With
 
-## Learn more
+- **[React Native](https://reactnative.dev/)** - Mobile app framework
+- **[Expo](https://expo.dev/)** - Development platform and tools
+- **[TypeScript](https://www.typescriptlang.org/)** - Type safety
+- **[NativeWind](https://www.nativewind.dev/)** - Tailwind CSS for React Native
+- **[React Navigation](https://reactnavigation.org/)** - Navigation library
+- **[Expo Router](https://docs.expo.dev/router/introduction/)** - File-based routing
+- **[React Native SVG](https://github.com/react-native-svg/react-native-svg)** - SVG support
+- **[Expo Vector Icons](https://docs.expo.dev/guides/icons/)** - Icon library
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🎯 Key Features Implementation
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Prayer Times System
+- Real-time prayer time calculations
+- Countdown timers with seconds precision
+- Arabic prayer names and descriptions
+- Automatic timezone detection
 
-## Join the community
+### Theme System
+- Context-based theme management
+- Smooth theme transitions
+- Persistent theme preferences
+- Consistent styling across all screens
 
-Join our community of developers creating universal apps.
+### Tasbih Counter
+- Circular progress visualization
+- Haptic feedback integration
+- Progress persistence
+- Beautiful animations
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📞 Support
+
+If you have any questions or need support, please open an issue on GitHub or contact the development team.
+
+## 🙏 Acknowledgments
+
+- Thanks to all contributors who have helped make this app better
+- Special thanks to the Islamic community for feedback and suggestions
+- Built with love for the Muslim ummah
+
+---
+
+<div align="center">
+  <p>Made with ❤️ for the Muslim Community</p>
+  <p>Daily Hidayah - Your Daily Islamic Companion</p>
+</div>
