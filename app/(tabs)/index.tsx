@@ -79,6 +79,7 @@ export default function IslamicAppHome() {
   useFocusEffect(
     useCallback(() => {
       loadProfileName();
+      loadTasbihData();
     }, [])
   );
 
@@ -153,11 +154,11 @@ export default function IslamicAppHome() {
       if (savedData) {
         const parsedData = JSON.parse(savedData);
         const totalToday = parsedData.reduce(
-          (sum: number, item: any) => sum + item.current,
+          (sum: number, item: any) => sum + (item.current || 0),
           0
         );
         const completedToday = parsedData.filter(
-          (item: any) => item.current >= item.target
+          (item: any) => (item.current || 0) >= (item.target || 0)
         ).length;
         const currentStreak = Math.min(
           ...parsedData.map((item: any) => item.streak || 0)
@@ -166,12 +167,18 @@ export default function IslamicAppHome() {
           (sum: number, item: any) => sum + (item.target || 0),
           0
         );
+        const allTimeCount = parsedData.reduce(
+          (sum: number, item: any) => sum + (item.allTimeCount || 0),
+          0
+        );
+        
         setTasbihTotalTarget(totalTarget > 0 ? totalTarget : 299);
         setTasbihData({
           totalToday,
           completedToday,
           currentStreak,
           isActive: totalToday > 0,
+          allTimeCount,
         });
       }
     } catch (error) {

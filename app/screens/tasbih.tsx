@@ -28,6 +28,7 @@ interface TasbihItem {
   gradientColors: string[];
   streak: number;
   totalCompleted: number;
+  allTimeCount: number; // Total count across all days
   lastCompletedDate?: string;
 }
 
@@ -39,9 +40,9 @@ interface TasbihStats {
   averageDaily: number;
 }
 
-const TASBIH_STORAGE_KEY = "tasbih_data_v2";
-const TASBIH_SETTINGS_KEY = "tasbih_settings_v2";
-const TASBIH_HISTORY_KEY = "tasbih_history_v2";
+const TASBIH_STORAGE_KEY = "tasbih_data_v3";
+const TASBIH_SETTINGS_KEY = "tasbih_settings_v3";
+const TASBIH_HISTORY_KEY = "tasbih_history_v3";
 
 const { width } = Dimensions.get("window");
 
@@ -58,6 +59,7 @@ export default function TasbihScreen() {
       gradientColors: ["#10B981", "#059669"],
       streak: 0,
       totalCompleted: 0,
+      allTimeCount: 0,
     },
     {
       id: "2",
@@ -69,6 +71,7 @@ export default function TasbihScreen() {
       gradientColors: ["#3B82F6", "#1D4ED8"],
       streak: 0,
       totalCompleted: 0,
+      allTimeCount: 0,
     },
     {
       id: "3",
@@ -80,6 +83,7 @@ export default function TasbihScreen() {
       gradientColors: ["#8B5CF6", "#7C3AED"],
       streak: 0,
       totalCompleted: 0,
+      allTimeCount: 0,
     },
     {
       id: "4",
@@ -91,6 +95,7 @@ export default function TasbihScreen() {
       gradientColors: ["#F97316", "#EA580C"],
       streak: 0,
       totalCompleted: 0,
+      allTimeCount: 0,
     },
     {
       id: "5",
@@ -102,6 +107,7 @@ export default function TasbihScreen() {
       gradientColors: ["#EC4899", "#DB2777"],
       streak: 0,
       totalCompleted: 0,
+      allTimeCount: 0,
     },
   ]);
 
@@ -125,6 +131,11 @@ export default function TasbihScreen() {
       saveTasbihData();
     }
   }, [tasbihItems]);
+
+  // Check for daily reset every time the component mounts or when date changes
+  useEffect(() => {
+    checkAndResetDaily();
+  }, [lastResetDate]);
 
   const startSparkleAnimation = () => {
     Animated.loop(
@@ -158,6 +169,7 @@ export default function TasbihScreen() {
             item.gradientColors || tasbihItems[index].gradientColors,
           streak: item.streak || 0,
           totalCompleted: item.totalCompleted || 0,
+          allTimeCount: item.allTimeCount || 0,
         }));
         setTasbihItems(mergedData);
       }
@@ -172,9 +184,21 @@ export default function TasbihScreen() {
         setDailyHistory(parsedHistory);
       }
 
-      checkAndResetDaily();
+      // Clear old data versions to prevent conflicts
+      await clearOldTasbihData();
     } catch (error) {
       console.log("Error loading tasbih data:", error);
+    }
+  };
+
+  const clearOldTasbihData = async () => {
+    try {
+      // Clear old version data
+      await SecureStore.deleteItemAsync("tasbih_data_v2");
+      await SecureStore.deleteItemAsync("tasbih_settings_v2");
+      await SecureStore.deleteItemAsync("tasbih_history_v2");
+    } catch (error) {
+      console.log("Error clearing old tasbih data:", error);
     }
   };
 
@@ -201,6 +225,7 @@ export default function TasbihScreen() {
       );
       setLastResetDate(settings.lastResetDate);
 
+      // Save today's total to history
       const todayTotal = tasbihItems.reduce(
         (sum, item) => sum + item.current,
         0
@@ -218,26 +243,42 @@ export default function TasbihScreen() {
 
   const checkAndResetDaily = () => {
     const today = new Date().toDateString();
-    if (lastResetDate !== today && lastResetDate !== "") {
-      saveSettings();
-
-      setTasbihItems((prev) =>
-        prev.map((item) => {
-          const wasCompleted = item.current >= item.target;
-          return {
-            ...item,
-            current: 0,
-            streak: wasCompleted ? item.streak + 1 : 0,
-            totalCompleted: wasCompleted
-              ? item.totalCompleted + 1
-              : item.totalCompleted,
-            lastCompletedDate: wasCompleted
-              ? lastResetDate
-              : item.lastCompletedDate,
-          };
-        })
-      );
-    } else if (lastResetDate === "") {
+    
+    // If this is the first time or if it's a new day
+    if (lastResetDate === "" || lastResetDate !== today) {
+      // If it's not the first time, save yesterday's data before resetting
+      if (lastResetDate !== "") {
+        // Save yesterday's progress to history
+        const yesterdayTotal = tasbihItems.reduce(
+          (sum, item) => sum + item.current,
+          0
+        );
+        const newHistory = { ...dailyHistory, [lastResetDate]: yesterdayTotal };
+        setDailyHistory(newHistory);
+        
+        // Update all-time counts and streaks
+        setTasbihItems((prev) =>
+          prev.map((item) => {
+            const wasCompleted = item.current >= item.target;
+            const yesterdayCount = item.current;
+            
+            return {
+              ...item,
+              current: 0, // Reset daily count
+              allTimeCount: item.allTimeCount + yesterdayCount, // Add to all-time
+              streak: wasCompleted ? item.streak + 1 : 0, // Update streak
+              totalCompleted: wasCompleted
+                ? item.totalCompleted + 1
+                : item.totalCompleted,
+              lastCompletedDate: wasCompleted
+                ? lastResetDate
+                : item.lastCompletedDate,
+            };
+          })
+        );
+      }
+      
+      // Save new settings
       saveSettings();
     }
   };
@@ -290,12 +331,14 @@ export default function TasbihScreen() {
       prev.map((item) => {
         if (item.id === id) {
           const newCount = item.current + 1;
+          // Increment allTimeCount in real-time
+          const newAllTimeCount = item.allTimeCount + 1;
           if (newCount === item.target) {
             Vibration.vibrate([200, 100, 200]);
           } else if (newCount % 10 === 0) {
             Vibration.vibrate(50);
           }
-          return { ...item, current: newCount };
+          return { ...item, current: newCount, allTimeCount: newAllTimeCount };
         }
         return item;
       })
@@ -347,12 +390,16 @@ export default function TasbihScreen() {
     const completedToday = tasbihItems.filter(
       (item) => item.current >= item.target
     ).length;
-    const currentStreak = Math.min(...tasbihItems.map((item) => item.streak));
-    const totalAllTime =
-      tasbihItems.reduce(
-        (sum, item) => sum + item.totalCompleted * item.target,
-        0
-      ) + totalToday;
+    
+    // Calculate streak - find the minimum streak among all tasbih items
+    const streaks = tasbihItems.map((item) => item.streak);
+    const currentStreak = streaks.length > 0 ? Math.min(...streaks) : 0;
+    
+    // Calculate all-time total - sum of all allTimeCount values
+    const totalAllTime = tasbihItems.reduce(
+      (sum, item) => sum + item.allTimeCount,
+      0
+    );
 
     const historyValues = Object.values(dailyHistory);
     const averageDaily =
@@ -827,6 +874,28 @@ export default function TasbihScreen() {
                         marginLeft: 4,
                       }}>
                       {item.totalCompleted} completed
+                    </Text>
+                  </View>
+                )}
+                {item.allTimeCount > 0 && (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      backgroundColor: "#DBEAFE",
+                      borderRadius: 8,
+                      paddingHorizontal: 8,
+                      paddingVertical: 4,
+                    }}>
+                    <Ionicons name="time" size={14} color="#3B82F6" />
+                    <Text
+                      style={{
+                        color: "#1D4ED8",
+                        fontSize: 12,
+                        fontWeight: "600",
+                        marginLeft: 4,
+                      }}>
+                      {item.allTimeCount.toLocaleString()} total
                     </Text>
                   </View>
                 )}
