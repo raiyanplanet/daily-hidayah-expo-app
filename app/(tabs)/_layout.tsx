@@ -47,7 +47,7 @@ const _layout = () => {
         name="index"
         options={{
           title: "Home",
-          headerTitle: "Islamic App",
+          headerTitle: "Daily Hidayah",
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? "home" : "home-outline"}
@@ -74,13 +74,13 @@ const _layout = () => {
       />
 
       <Tabs.Screen
-        name="qibla"
+        name="calander"
         options={{
-          title: "Qibla",
-          headerTitle: "Qibla Direction",
+          title: "Calander",
+          headerTitle: "Islamic Calander",
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
-              name={focused ? "compass" : "compass-outline"}
+              name={focused ? "calendar" : "calendar-outline"}
               size={size}
               color={color}
             />

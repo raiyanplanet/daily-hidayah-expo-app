@@ -20,6 +20,7 @@ import {
   APP_FEATURES,
   BASE_PRAYER_TIMES,
   calculateTimeDifferenceWithSeconds,
+  DAILY_AMAL,
   DAILY_INSPIRATIONS,
   FEATURED_AYAT,
   getCurrentTimeInSeconds,
@@ -199,7 +200,7 @@ export default function IslamicAppHome() {
     return date.toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
-      hour12: false,
+      hour12: true,
     });
   };
 
@@ -214,7 +215,38 @@ export default function IslamicAppHome() {
   };
 
   const getHijriDate = () => {
-    return "9 Ramadhan 1446 H";
+    const date = new Date();
+    
+    // Arabic Hijri date using standard Islamic calendar
+    const arabicOptions: Intl.DateTimeFormatOptions = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric', 
+      calendar: 'islamic' 
+    };
+    const arabicHijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', arabicOptions).format(date);
+    
+    // English Hijri date using standard Islamic calendar
+    const englishOptions: Intl.DateTimeFormatOptions = { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric', 
+      calendar: 'islamic' 
+    };
+    const englishHijriDate = new Intl.DateTimeFormat('en-u-ca-islamic', englishOptions).format(date);
+    
+    console.log("Arabic Hijri Date:", arabicHijriDate);
+    console.log("English Hijri Date:", englishHijriDate);
+    
+    // Extract just the date part (without weekday)
+    const arabicDate = arabicHijriDate.split('، ').slice(1).join('، ');
+    const englishDate = englishHijriDate;
+    
+    return {
+      arabic: arabicDate,
+      english: englishDate
+    };
   };
 
   const getGreeting = () => {
@@ -331,7 +363,7 @@ export default function IslamicAppHome() {
         className={`mx-6 mb-6 ${theme === 'dark' ? 'bg-transparent' : 'bg-transparent'}`}>
         <TouchableOpacity
           onPress={() => handleFeaturePress("/screens/tasbih", "Tasbih")}
-          className={` rounded-3xl p-6 shadow-lg border border-emerald-200/40 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
+          className={` rounded-3xl p-6  border border-emerald-500/40 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
           
           activeOpacity={0.9}>
           <View className="flex-row items-center mb-4">
@@ -446,55 +478,157 @@ export default function IslamicAppHome() {
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor={colors.accent} />
       <ScrollView style={{ flex: 1, backgroundColor: colors.background }} showsVerticalScrollIndicator={false}>
-        {/* Enhanced Header */}
-        <Animated.View style={{ opacity: fadeAnim, paddingHorizontal: 24, paddingTop: 24, paddingBottom: 32 }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-            <View>
-              <Text style={{ color: colors.text, fontSize: 20, fontWeight: '600' }}>{getGreeting()}</Text>
-              <Text style={{ color: colors.textSecondary, fontSize: 14, fontWeight: '500' }}>{getHijriDate()}</Text>
-              <Text style={{ color: colors.textSecondary, fontSize: 12 }}>{formatDate(currentTime)}</Text>
-            </View>
-            <View style={{ alignItems: 'flex-end' }}>
-              <TouchableOpacity style={{ padding: 12, backgroundColor: colors.accent + '33', borderRadius: 16, marginBottom: 8 }}>
-                <Ionicons name="notifications" size={24} color={colors.text} />
+        {/* Minimalistic Modern Header */}
+        <Animated.View style={{ opacity: fadeAnim, paddingHorizontal: 0, paddingTop: 0, paddingBottom: 0 }}>
+          <View
+            style={{
+              backgroundColor: colors.card,
+              paddingHorizontal: 20,
+              paddingTop: 20,
+              paddingBottom: 24,
+            }}>
+            {/* Top Row: Greeting and Profile */}
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: colors.text, fontSize: 20, fontWeight: '700', marginBottom: 4 }}>
+                  {getGreeting()}
+                </Text>
+                <Text style={{ color: colors.textSecondary, fontSize: 14, fontWeight: '400' }}>
+                  {formatDate(currentTime)}
+                </Text>
+              </View>
+              <TouchableOpacity 
+                style={{ 
+                  backgroundColor: colors.accent + '15', 
+                  borderRadius: 12, 
+                  padding: 10,
+                }}>
+                <Ionicons name="notifications-outline" size={20} color={colors.accent} />
               </TouchableOpacity>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Ionicons name="location" size={14} color={colors.accent} />
-                <Text style={{ color: colors.textSecondary, fontSize: 12, marginLeft: 4 }}>Chittagong, BD</Text>
+            </View>
+
+            {/* Current Time and Next Prayer */}
+            <View style={{ 
+              backgroundColor: theme === 'dark' ? colors.background : '#F8FAFC', 
+              borderRadius: 16, 
+              padding: 20, 
+              marginBottom: 16,
+              borderWidth: 1,
+              borderColor: colors.accent + '10',
+            }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+                <Text style={{ color: colors.text, fontSize: 32, fontWeight: '300', letterSpacing: 1 }}>
+                  {formatTime(currentTime)}
+                </Text>
+                <View style={{ alignItems: 'flex-end' }}>
+                  <View style={{ 
+                    backgroundColor: colors.accent + '15', 
+                    borderRadius: 8, 
+                    paddingHorizontal: 12, 
+                    paddingVertical: 6,
+                    marginBottom: 4,
+                  }}>
+                    <Text style={{ color: colors.accent, fontSize: 12, fontWeight: '600' }}>
+                      {getHijriDate().arabic}
+                    </Text>
+                  </View>
+                  <Text style={{ color: colors.textSecondary, fontSize: 10, fontWeight: '500' }}>
+                    {getHijriDate().english}
+                  </Text>
+                </View>
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Ionicons name="time-outline" size={16} color={colors.textSecondary} />
+                  <Text style={{ color: colors.textSecondary, fontSize: 14, marginLeft: 6, fontWeight: '500' }}>
+                    Next: {nextPrayer?.name}
+                  </Text>
+                </View>
+                <View style={{ 
+                  backgroundColor: colors.accent + '10', 
+                  borderRadius: 6, 
+                  paddingHorizontal: 8, 
+                  paddingVertical: 4 
+                }}>
+                  <Text style={{ color: colors.accent, fontSize: 13, fontWeight: '600' }}>
+                    {nextPrayerCountdown}
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
-          {/* Enhanced Current Time Display */}
-          <View style={{ backgroundColor: colors.card, borderRadius: 24, padding: 24, marginBottom: 24 }}>
-            <Text style={{ color: colors.text, fontSize: 48, fontWeight: '300', marginBottom: 8, textAlign: 'center' }}>{formatTime(currentTime)}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-              <Ionicons name="time" size={16} color={colors.accent} />
-              <Text style={{ color: colors.textSecondary, fontSize: 16, marginLeft: 8 }}>Next: {nextPrayer?.name} • {nextPrayerCountdown}</Text>
-            </View>
-          </View>
-          {/* Prayer Times */}
-          <View style={{ flexDirection: 'row', gap: 12, marginBottom: 16 }}>
-            {/* Current Prayer */}
-            <View style={{ backgroundColor: colors.card, borderRadius: 16, padding: 16, flex: 1 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                <Ionicons name="checkmark-circle" size={16} color={colors.accent} />
-                <Text style={{ color: colors.textSecondary, fontSize: 12, marginLeft: 4, fontWeight: '500' }}>CURRENT PERIOD</Text>
+
+            {/* Prayer Status Cards */}
+            <View style={{ flexDirection: 'row', gap: 12 }}>
+              {/* Current Prayer */}
+              <View style={{ 
+                backgroundColor: colors.accent + '08', 
+                borderRadius: 16, 
+                padding: 18, 
+                flex: 1,
+                borderWidth: 1,
+                borderColor: colors.accent + '25',
+              }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+                  <View style={{ 
+                    backgroundColor: colors.accent, 
+                    borderRadius: 8, 
+                    padding: 6, 
+                    marginRight: 10 
+                  }}>
+                    <Ionicons name="checkmark-circle" size={14} color={colors.card} />
+                  </View>
+                  <Text style={{ color: colors.accent, fontSize: 12, fontWeight: '700' }}>
+                    CURRENT
+                  </Text>
+                </View>
+                <Text style={{ color: colors.text, fontSize: 18, fontWeight: '700', marginBottom: 6 }}>
+                  {currentPrayer?.name || "Before Fajr"}
+                </Text>
+                <Text style={{ color: colors.textSecondary, fontSize: 14, fontWeight: '500' }}>
+                  {currentPrayer?.time}
+                </Text>
+                {currentPrayer?.arabicName && (
+                  <Text style={{ color: colors.textSecondary, fontSize: 11, fontWeight: '400', marginTop: 4, textAlign: 'right' }}>
+                    {currentPrayer.arabicName}
+                  </Text>
+                )}
               </View>
-              <Text style={{ color: colors.text, fontSize: 18, fontWeight: 'bold' }}>{currentPrayer?.name || "Before Fajr"}</Text>
-              <Text style={{ color: colors.textSecondary, fontSize: 14 }}>{currentPrayer?.time}</Text>
-              <Text style={{ color: colors.textSecondary, fontSize: 12 }}>{currentPrayer?.arabicName}</Text>
-              <Text style={{ color: colors.textSecondary, fontSize: 12 }}>{currentPrayer?.description}</Text>
-            </View>
-            {/* Next Prayer */}
-            <View style={{ backgroundColor: colors.card, borderRadius: 16, padding: 16, flex: 1, borderWidth: 1, borderColor: colors.accent + '55' }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-                <Ionicons name="alarm-outline" size={16} color={colors.accent} />
-                <Text style={{ color: colors.textSecondary, fontSize: 12, marginLeft: 4, fontWeight: '500' }}>NEXT PRAYER</Text>
+
+              {/* Next Prayer */}
+              <View style={{ 
+                backgroundColor: colors.background, 
+                borderRadius: 16, 
+                padding: 18, 
+                flex: 1,
+                borderWidth: 1,
+                borderColor: colors.accent + '20',
+              }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+                  <View style={{ 
+                    backgroundColor: colors.accent + '20', 
+                    borderRadius: 8, 
+                    padding: 6, 
+                    marginRight: 10 
+                  }}>
+                    <Ionicons name="alarm-outline" size={14} color={colors.accent} />
+                  </View>
+                  <Text style={{ color: colors.textSecondary, fontSize: 12, fontWeight: '700' }}>
+                    NEXT
+                  </Text>
+                </View>
+                <Text style={{ color: colors.text, fontSize: 18, fontWeight: '700', marginBottom: 6 }}>
+                  {nextPrayer?.name}
+                </Text>
+                <Text style={{ color: colors.textSecondary, fontSize: 14, fontWeight: '500', marginBottom: 8 }}>
+                  {nextPrayer?.time}
+                </Text>
+               
+                {nextPrayer?.arabicName && (
+                  <Text style={{ color: colors.textSecondary, fontSize: 11, fontWeight: '400', marginTop: 6, textAlign: 'right' }}>
+                    {nextPrayer.arabicName}
+                  </Text>
+                )}
               </View>
-              <Text style={{ color: colors.text, fontSize: 18, fontWeight: 'bold' }}>{nextPrayer?.name}</Text>
-              <Text style={{ color: colors.textSecondary, fontSize: 14 }}>in {nextPrayerCountdown}</Text>
-              <Text style={{ color: colors.textSecondary, fontSize: 12 }}>{nextPrayer?.arabicName}</Text>
-              <Text style={{ color: colors.textSecondary, fontSize: 12 }}>{nextPrayer?.description}</Text>
             </View>
           </View>
         </Animated.View>
@@ -582,6 +716,37 @@ export default function IslamicAppHome() {
                       </View>
                       <Text style={{ color: colors.text, fontSize: 16, fontWeight: '500', marginBottom: 12, lineHeight: 24 }}>{inspiration.quote}</Text>
                       <Text style={{ color: inspiration.color, fontSize: 14, fontWeight: '600' }}>{inspiration.reference}</Text>
+                    </View>
+                  </View>
+                </View>
+              );
+            })()}
+          </View>
+          {/* Daily Amal Section */}
+          <View style={{ paddingHorizontal: 24, marginBottom: 32 }}>
+            <Text style={{ color: colors.text, fontSize: 20, fontWeight: 'bold', marginBottom: 24 }}>Daily Amal</Text>
+            {(() => {
+              const today = new Date();
+              const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+              const amal = DAILY_AMAL[dayOfYear % DAILY_AMAL.length];
+              return (
+                <View style={{ backgroundColor: amal.color + '15', borderRadius: 24, padding: 24, borderWidth: 1, borderColor: amal.color + '30' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                    <View style={{ backgroundColor: amal.color, borderRadius: 999, padding: 12, marginRight: 16 }}>
+                      <Text style={{ fontSize: 24 }}>{amal.emoji}</Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+                        <View style={{ backgroundColor: amal.color + '20', borderRadius: 999, paddingHorizontal: 12, paddingVertical: 4, marginRight: 8 }}>
+                          <Text style={{ color: amal.color, fontSize: 12, fontWeight: 'bold' }}>{amal.category}</Text>
+                        </View>
+                        <Text style={{ color: colors.textSecondary, fontSize: 12 }}>Daily</Text>
+                      </View>
+                      <Text style={{ color: colors.text, fontSize: 20, fontWeight: 'bold', marginBottom: 12, textAlign: 'right', lineHeight: 32 }}>{amal.arabic}</Text>
+                      <Text style={{ color: colors.textSecondary, fontSize: 14, marginBottom: 8, lineHeight: 20, fontStyle: 'italic' }}>{amal.banglaPronunciation}</Text>
+                      <Text style={{ color: colors.text, fontSize: 16, fontWeight: '500', marginBottom: 8, lineHeight: 24 }}>{amal.english}</Text>
+                      <Text style={{ color: colors.textSecondary, fontSize: 14, marginBottom: 12, lineHeight: 20 }}>{amal.bangla}</Text>
+                      <Text style={{ color: amal.color, fontSize: 14, fontWeight: '600' }}>{amal.reference}</Text>
                     </View>
                   </View>
                 </View>

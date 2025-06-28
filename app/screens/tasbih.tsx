@@ -43,6 +43,7 @@ interface TasbihStats {
 const TASBIH_STORAGE_KEY = "tasbih_data_v3";
 const TASBIH_SETTINGS_KEY = "tasbih_settings_v3";
 const TASBIH_HISTORY_KEY = "tasbih_history_v3";
+const TASBIH_FIRST_USE_KEY = "tasbih_first_use_v1";
 
 const { width } = Dimensions.get("window");
 
@@ -118,10 +119,12 @@ export default function TasbihScreen() {
   );
   const [pulseAnimation] = useState(new Animated.Value(1));
   const [sparkleAnimation] = useState(new Animated.Value(0));
+  const [firstUseDate, setFirstUseDate] = useState<string>("");
 
   // Load saved data on component mount
   useEffect(() => {
     loadTasbihData();
+    loadFirstUseDate();
     startSparkleAnimation();
   }, []);
 
@@ -136,6 +139,17 @@ export default function TasbihScreen() {
   useEffect(() => {
     checkAndResetDaily();
   }, [lastResetDate]);
+
+  // Add auto-reset timer
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const today = new Date().toDateString();
+      if (lastResetDate !== today) {
+        checkAndResetDaily();
+      }
+    }, 30000); // check every 30 seconds
+    return () => clearInterval(interval);
+  }, [lastResetDate, tasbihItems]);
 
   const startSparkleAnimation = () => {
     Animated.loop(
@@ -191,6 +205,20 @@ export default function TasbihScreen() {
     }
   };
 
+  const loadFirstUseDate = async () => {
+    try {
+      let storedDate = await SecureStore.getItemAsync(TASBIH_FIRST_USE_KEY);
+      if (!storedDate) {
+        const today = new Date().toDateString();
+        await SecureStore.setItemAsync(TASBIH_FIRST_USE_KEY, today);
+        storedDate = today;
+      }
+      setFirstUseDate(storedDate);
+    } catch (error) {
+      console.log("Error loading first use date:", error);
+    }
+  };
+
   const clearOldTasbihData = async () => {
     try {
       // Clear old version data
@@ -243,7 +271,7 @@ export default function TasbihScreen() {
 
   const checkAndResetDaily = () => {
     const today = new Date().toDateString();
-    
+
     // If this is the first time or if it's a new day
     if (lastResetDate === "" || lastResetDate !== today) {
       // If it's not the first time, save yesterday's data before resetting
@@ -255,29 +283,27 @@ export default function TasbihScreen() {
         );
         const newHistory = { ...dailyHistory, [lastResetDate]: yesterdayTotal };
         setDailyHistory(newHistory);
-        
-        // Update all-time counts and streaks
-        setTasbihItems((prev) =>
-          prev.map((item) => {
-            const wasCompleted = item.current >= item.target;
-            const yesterdayCount = item.current;
-            
-            return {
-              ...item,
-              current: 0, // Reset daily count
-              allTimeCount: item.allTimeCount + yesterdayCount, // Add to all-time
-              streak: wasCompleted ? item.streak + 1 : 0, // Update streak
-              totalCompleted: wasCompleted
-                ? item.totalCompleted + 1
-                : item.totalCompleted,
-              lastCompletedDate: wasCompleted
-                ? lastResetDate
-                : item.lastCompletedDate,
-            };
-          })
-        );
+        // Update all-time counts and streaks, and RESET current to 0
+        const resetItems = tasbihItems.map((item) => {
+          const wasCompleted = item.current >= item.target;
+          const yesterdayCount = item.current;
+          return {
+            ...item,
+            current: 0, // Reset daily count
+            allTimeCount: item.allTimeCount + yesterdayCount, // Add to all-time
+            streak: wasCompleted ? item.streak + 1 : 0, // Update streak
+            totalCompleted: wasCompleted
+              ? item.totalCompleted + 1
+              : item.totalCompleted,
+            lastCompletedDate: wasCompleted
+              ? lastResetDate
+              : item.lastCompletedDate,
+          };
+        });
+        setTasbihItems(resetItems);
+        // Save the reset data immediately so UI updates
+        SecureStore.setItemAsync(TASBIH_STORAGE_KEY, JSON.stringify(resetItems));
       }
-      
       // Save new settings
       saveSettings();
     }
@@ -368,17 +394,31 @@ export default function TasbihScreen() {
 
   const resetAllCounts = () => {
     Alert.alert(
-      "Reset All Counters",
-      "Are you sure you want to reset all counters?",
+      "Full Reset",
+      "Are you sure you want to reset ALL tasbih data? This will clear all counts, all-time stats, streaks, and history.",
       [
         { text: "Cancel", style: "cancel" },
         {
           text: "Reset All",
           style: "destructive",
-          onPress: () => {
-            setTasbihItems((prev) =>
-              prev.map((item) => ({ ...item, current: 0 }))
-            );
+          onPress: async () => {
+            const resetItems = tasbihItems.map((item) => ({
+              ...item,
+              current: 0,
+              allTimeCount: 0,
+              streak: 0,
+              totalCompleted: 0,
+              lastCompletedDate: undefined,
+            }));
+            setTasbihItems(resetItems);
+            setDailyHistory({});
+            setFirstUseDate("");
+            setLastResetDate("");
+            // Remove from SecureStore
+            await SecureStore.setItemAsync(TASBIH_STORAGE_KEY, JSON.stringify(resetItems));
+            await SecureStore.setItemAsync(TASBIH_HISTORY_KEY, JSON.stringify({}));
+            await SecureStore.setItemAsync(TASBIH_SETTINGS_KEY, JSON.stringify({ lastResetDate: "" }));
+            await SecureStore.deleteItemAsync(TASBIH_FIRST_USE_KEY);
           },
         },
       ]
@@ -390,30 +430,30 @@ export default function TasbihScreen() {
     const completedToday = tasbihItems.filter(
       (item) => item.current >= item.target
     ).length;
-    
-    // Calculate streak - find the minimum streak among all tasbih items
     const streaks = tasbihItems.map((item) => item.streak);
     const currentStreak = streaks.length > 0 ? Math.min(...streaks) : 0;
-    
-    // Calculate all-time total - sum of all allTimeCount values
     const totalAllTime = tasbihItems.reduce(
       (sum, item) => sum + item.allTimeCount,
       0
     );
-
-    const historyValues = Object.values(dailyHistory);
-    const averageDaily =
-      historyValues.length > 0
-        ? historyValues.reduce((sum, val) => sum + val, 0) /
-          historyValues.length
-        : 0;
-
+    // Calculate number of days since first use (inclusive)
+    let daysSinceFirstUse = 1;
+    if (firstUseDate) {
+      const first = new Date(firstUseDate);
+      const today = new Date();
+      // Set both to midnight to avoid timezone issues
+      first.setHours(0,0,0,0);
+      today.setHours(0,0,0,0);
+      const diff = Math.floor((today.getTime() - first.getTime()) / (1000 * 60 * 60 * 24));
+      daysSinceFirstUse = diff + 1;
+    }
+    const averageDaily = daysSinceFirstUse > 0 ? Math.round(totalAllTime / daysSinceFirstUse) : 0;
     return {
       totalToday,
       completedToday,
       currentStreak,
       totalAllTime,
-      averageDaily: Math.round(averageDaily),
+      averageDaily,
     };
   };
 
@@ -540,11 +580,7 @@ export default function TasbihScreen() {
               minWidth: "45%",
               borderRadius: 16,
               padding: 16,
-              shadowColor: "#10B981",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 8,
-              elevation: 4,
+             
             }}>
             <View
               style={{
@@ -579,11 +615,7 @@ export default function TasbihScreen() {
               minWidth: "45%",
               borderRadius: 16,
               padding: 16,
-              shadowColor: "#F59E0B",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 8,
-              elevation: 4,
+              
             }}>
             <View
               style={{
@@ -618,11 +650,7 @@ export default function TasbihScreen() {
               minWidth: "45%",
               borderRadius: 16,
               padding: 16,
-              shadowColor: "#3B82F6",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 8,
-              elevation: 4,
+              
             }}>
             <View
               style={{
@@ -657,11 +685,7 @@ export default function TasbihScreen() {
               minWidth: "45%",
               borderRadius: 16,
               padding: 16,
-              shadowColor: "#8B5CF6",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 8,
-              elevation: 4,
+             
             }}>
             <View
               style={{
@@ -703,6 +727,7 @@ export default function TasbihScreen() {
         style={{
           transform: [{ scale: animatedValues[index] }],
           marginHorizontal: 20,
+          marginTop: 20,
           marginBottom: 20,
         }}>
         <LinearGradient
@@ -714,11 +739,7 @@ export default function TasbihScreen() {
           style={{
             borderRadius: 24,
             padding: 20,
-            shadowColor: isCompleted ? item.gradientColors[0] : "#000",
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: isCompleted ? 0.3 : 0.1,
-            shadowRadius: 16,
-            elevation: 12,
+            
           }}>
           {/* Header Section */}
           <View
@@ -909,11 +930,7 @@ export default function TasbihScreen() {
                 backgroundColor: theme === "dark" ? "#374151" : "#F3F4F6",
                 borderRadius: 12,
                 padding: 12,
-                shadowColor: "#000",
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
-                elevation: 2,
+                
               }}>
               <Ionicons name="refresh" size={20} color={colors.textSecondary} />
             </TouchableOpacity>
@@ -928,11 +945,7 @@ export default function TasbihScreen() {
               style={{
                 borderRadius: 20,
                 padding: 24,
-                shadowColor: item.gradientColors[0],
-                shadowOffset: { width: 0, height: 6 },
-                shadowOpacity: 0.4,
-                shadowRadius: 12,
-                elevation: 8,
+                
                 position: "relative",
                 overflow: "hidden",
               }}>
@@ -1002,11 +1015,7 @@ export default function TasbihScreen() {
         style={{
           paddingHorizontal: 20,
           paddingVertical: 16,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 0.1,
-          shadowRadius: 8,
-          elevation: 8,
+          
         }}>
         <View
           style={{
@@ -1020,11 +1029,7 @@ export default function TasbihScreen() {
               backgroundColor: colors.card,
               borderRadius: 16,
               padding: 12,
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 4,
-              elevation: 4,
+              
             }}>
             <Ionicons name="arrow-back" size={24} color={colors.text} />
           </TouchableOpacity>
@@ -1057,19 +1062,20 @@ export default function TasbihScreen() {
             </Text>
           </View>
 
+          {/* Topbar Reset Button */}
           <TouchableOpacity
             onPress={resetAllCounts}
             style={{
-              backgroundColor: "#FEE2E2",
+              backgroundColor: theme === 'dark' ? '#374151' : '#FEE2E2',
               borderRadius: 16,
               padding: 12,
-              shadowColor: "#EF4444",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.2,
-              shadowRadius: 4,
-              elevation: 4,
+              marginLeft: 8,
+              
+              flexDirection: 'row',
+              alignItems: 'center',
             }}>
-            <Ionicons name="refresh" size={24} color="#EF4444" />
+            <Ionicons name="refresh" size={22} color={theme === 'dark' ? '#fff' : '#EF4444'} />
+           
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -1093,11 +1099,7 @@ export default function TasbihScreen() {
             backgroundColor: colors.card,
             borderRadius: 24,
             padding: 24,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.15,
-            shadowRadius: 16,
-            elevation: 12,
+            
           }}>
           <View
             style={{
@@ -1149,11 +1151,7 @@ export default function TasbihScreen() {
                     borderRadius: 20,
                     padding: 20,
                     alignItems: "center",
-                    shadowColor: "#3B82F6",
-                    shadowOffset: { width: 0, height: 4 },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 8,
-                    elevation: 6,
+                    
                   }}>
                   <View
                     style={{
@@ -1197,11 +1195,7 @@ export default function TasbihScreen() {
                     borderRadius: 20,
                     padding: 20,
                     alignItems: "center",
-                    shadowColor: "#10B981",
-                    shadowOffset: { width: 0, height: 4 },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 8,
-                    elevation: 6,
+                    
                   }}>
                   <View
                     style={{
@@ -1268,11 +1262,7 @@ export default function TasbihScreen() {
                   borderRadius: 20,
                   padding: 20,
                   alignItems: "center",
-                  shadowColor: "#8B5CF6",
-                  shadowOffset: { width: 0, height: 4 },
-                  shadowOpacity: 0.2,
-                  shadowRadius: 8,
-                  elevation: 6,
+                  
                 }}>
                 <View
                   style={{
