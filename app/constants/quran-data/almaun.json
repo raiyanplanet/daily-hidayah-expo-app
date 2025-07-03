@@ -1,0 +1,72 @@
+[
+  {
+    "number": 1,
+    "arabic": "[Arabic text for verse 1 of surah 107]",
+    "translation": "[English translation for verse 1 of surah 107]",
+    "transliteration": "[Transliteration for verse 1 of surah 107]",
+    "juz": 30,
+    "page": 108,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 2,
+    "arabic": "[Arabic text for verse 2 of surah 107]",
+    "translation": "[English translation for verse 2 of surah 107]",
+    "transliteration": "[Transliteration for verse 2 of surah 107]",
+    "juz": 30,
+    "page": 108,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 3,
+    "arabic": "[Arabic text for verse 3 of surah 107]",
+    "translation": "[English translation for verse 3 of surah 107]",
+    "transliteration": "[Transliteration for verse 3 of surah 107]",
+    "juz": 30,
+    "page": 108,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 4,
+    "arabic": "[Arabic text for verse 4 of surah 107]",
+    "translation": "[English translation for verse 4 of surah 107]",
+    "transliteration": "[Transliteration for verse 4 of surah 107]",
+    "juz": 30,
+    "page": 108,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 5,
+    "arabic": "[Arabic text for verse 5 of surah 107]",
+    "translation": "[English translation for verse 5 of surah 107]",
+    "transliteration": "[Transliteration for verse 5 of surah 107]",
+    "juz": 30,
+    "page": 108,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 6,
+    "arabic": "[Arabic text for verse 6 of surah 107]",
+    "translation": "[English translation for verse 6 of surah 107]",
+    "transliteration": "[Transliteration for verse 6 of surah 107]",
+    "juz": 30,
+    "page": 108,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 7,
+    "arabic": "[Arabic text for verse 7 of surah 107]",
+    "translation": "[English translation for verse 7 of surah 107]",
+    "transliteration": "[Transliteration for verse 7 of surah 107]",
+    "juz": 30,
+    "page": 108,
+    "ruku": 1,
+    "sajda": false
+  }
+]

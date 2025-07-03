@@ -4,23 +4,34 @@ import {
   Alert,
   Clipboard,
   FlatList,
+  Modal,
   SafeAreaView,
+  ScrollView,
   StatusBar,
   Text,
-  TextInput,
   TouchableOpacity,
   View
 } from "react-native";
-import { Dua, DUAS_CATEGORIES, DUAS_DATA } from "../constants/duas";
+import { Dua, DUAS_BY_CATEGORY, DUAS_CATEGORIES } from "../constants/duas";
 import { ThemeContext } from "../theme/ThemeContext";
 
 export default function DuasScreen() {
   const { theme, colors } = useContext(ThemeContext);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [duas, setDuas] = useState<Dua[]>(DUAS_DATA);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [duas, setDuas] = useState<Dua[]>([]);
 
-  const categories = DUAS_CATEGORIES;
+  const categories = DUAS_CATEGORIES.filter(cat => cat !== "All");
+
+  // Category icons mapping
+  const categoryIcons = {
+    "Morning & Evening": "sunny",
+    "Food & Drink": "restaurant",
+    "Travel": "airplane",
+    "Home": "home",
+    "Knowledge": "school",
+    "Marriage": "heart",
+  };
 
   const toggleFavorite = (id: string) => {
     setDuas((prev) =>
@@ -30,63 +41,113 @@ export default function DuasScreen() {
     );
   };
 
-  const filteredDuas = duas.filter((dua) => {
-    const searchLower = searchQuery.toLowerCase();
-    const matchesSearch = 
-      dua.title.toLowerCase().includes(searchLower) ||
-      dua.translation.toLowerCase().includes(searchLower) ||
-      dua.banglaTranslation.toLowerCase().includes(searchLower) ||
-      dua.transliteration.toLowerCase().includes(searchLower) ||
-      dua.category.toLowerCase().includes(searchLower) ||
-      dua.reference.toLowerCase().includes(searchLower);
-    const matchesCategory = selectedCategory === "All" || dua.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const openCategoryModal = (category: string) => {
+    const categoryDuas = DUAS_BY_CATEGORY[category as keyof typeof DUAS_BY_CATEGORY] || [];
+    setDuas(categoryDuas);
+    setSelectedCategory(category);
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setSelectedCategory("");
+  };
 
   const renderDua = ({ item }: { item: Dua }) => (
-    <View style={{ backgroundColor: colors.card, borderRadius: 32, padding: 24, marginBottom: 16, shadowColor: colors.border, shadowOpacity: 0.1, shadowRadius: 4 }}>
+    <View style={{ 
+      backgroundColor: colors.card, 
+      borderRadius: 16, 
+      padding: 20, 
+      marginBottom: 16, 
+      shadowColor: colors.border, 
+      shadowOpacity: 0.05, 
+      shadowRadius: 8,
+      elevation: 2,
+    }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
         <View style={{ flex: 1 }}>
-          <Text style={{ color: colors.text, fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>
+          <Text style={{ color: colors.text, fontSize: 18, fontWeight: '600', marginBottom: 8 }}>
             {item.title}
           </Text>
-          <View style={{ backgroundColor: colors.accent, borderRadius: 999, paddingHorizontal: 5, paddingVertical: 2, alignSelf: 'flex-start', marginBottom: 3 }}>
-            <Text style={{ color: "#fff", fontSize: 12, fontWeight: '600' }}>
+          <View style={{ 
+            backgroundColor: colors.accent + '15', 
+            borderRadius: 8, 
+            paddingHorizontal: 8, 
+            paddingVertical: 4, 
+            alignSelf: 'flex-start'
+          }}>
+            <Text style={{ color: colors.accent, fontSize: 12, fontWeight: '500' }}>
               {item.category}
             </Text>
           </View>
         </View>
         <TouchableOpacity
           onPress={() => toggleFavorite(item.id)}
-          style={{ padding: 8 }}>
+          style={{ padding: 4 }}>
           <Ionicons
             name={item.favorite ? "heart" : "heart-outline"}
-            size={24}
-            color={item.favorite ? "#EF4444" : "#9CA3AF"}
+            size={20}
+            color={item.favorite ? "#EF4444" : colors.textSecondary}
           />
         </TouchableOpacity>
       </View>
 
       <View style={{ marginBottom: 16 }}>
-        <Text style={{ color: colors.text, fontSize: 20, fontWeight: '300', marginBottom: 12, textAlign: 'right', lineHeight: 28 }}>
+        <Text style={{ 
+          color: colors.text, 
+          fontSize: 20, 
+          fontWeight: '300', 
+          marginBottom: 16, 
+          textAlign: 'right', 
+          lineHeight: 32,
+          backgroundColor: colors.background,
+          padding: 16,
+          borderRadius: 12,
+        }}>
           {item.arabic}
         </Text>
-        <Text style={{ color: colors.textSecondary, fontSize: 14, fontStyle: 'italic', marginBottom: 8 }}>
+        <Text style={{ 
+          color: colors.textSecondary, 
+          fontSize: 14, 
+          fontStyle: 'italic', 
+          marginBottom: 12,
+        }}>
           {item.transliteration}
         </Text>
-        <Text style={{ color: colors.textSecondary, fontSize: 12, fontStyle: 'italic', marginBottom: 8 }}>
+        <Text style={{ 
+          color: colors.textSecondary, 
+          fontSize: 12, 
+          fontStyle: 'italic', 
+          marginBottom: 16,
+        }}>
           {item.banglaPronunciation}
         </Text>
-        <Text style={{ color: colors.text, fontSize: 16, lineHeight: 24, marginBottom: 8 }}>
+        <Text style={{ 
+          color: colors.text, 
+          fontSize: 15, 
+          lineHeight: 22, 
+          marginBottom: 12,
+        }}>
           {item.translation}
         </Text>
-        <Text style={{ color: colors.textSecondary, fontSize: 14, lineHeight: 20 }}>
+        <Text style={{ 
+          color: colors.textSecondary, 
+          fontSize: 14, 
+          lineHeight: 20,
+        }}>
           {item.banglaTranslation}
         </Text>
       </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, borderTopWidth: 1, borderTopColor: colors.border }}>
-        <Text style={{ color: colors.textSecondary, fontSize: 12 }}>
+      <View style={{ 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        paddingTop: 16, 
+        borderTopWidth: 1, 
+        borderTopColor: colors.border + '30'
+      }}>
+        <Text style={{ color: colors.textSecondary, fontSize: 12, fontWeight: '500' }}>
           {item.reference}
         </Text>
         <TouchableOpacity
@@ -95,8 +156,15 @@ export default function DuasScreen() {
             Clipboard.setString(duaText);
             Alert.alert("Copied!", "Dua copied to clipboard");
           }}
-          style={{ padding: 8, backgroundColor: colors.border, borderRadius: 8 }}>
-          <Text style={{ color: colors.textSecondary, fontSize: 14, fontWeight: '600' }}>
+          style={{ 
+            padding: 8, 
+            backgroundColor: colors.accent, 
+            borderRadius: 8,
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}>
+          <Ionicons name="copy-outline" size={14} color="#fff" style={{ marginRight: 4 }} />
+          <Text style={{ color: "#fff", fontSize: 12, fontWeight: '500' }}>
             Copy
           </Text>
         </TouchableOpacity>
@@ -104,76 +172,140 @@ export default function DuasScreen() {
     </View>
   );
 
+  const renderCategoryButton = (category: string) => {
+    const duaCount = DUAS_BY_CATEGORY[category as keyof typeof DUAS_BY_CATEGORY]?.length || 0;
+    const iconName = categoryIcons[category as keyof typeof categoryIcons] || "book";
+    
+    return (
+      <TouchableOpacity
+        key={category}
+        onPress={() => openCategoryModal(category)}
+        style={{ 
+          backgroundColor: colors.card, 
+          padding: 20, 
+          marginBottom: 12,
+          borderRadius: 16, 
+          shadowColor: colors.border, 
+          shadowOpacity: 0.05, 
+          shadowRadius: 8,
+          elevation: 2,
+        }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ 
+            backgroundColor: colors.accent + '15', 
+            borderRadius: 12, 
+            padding: 10, 
+            marginRight: 16 
+          }}>
+            <Ionicons name={iconName as any} size={24} color={colors.accent} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ 
+              color: colors.text, 
+              fontSize: 16, 
+              fontWeight: '600',
+              marginBottom: 4,
+            }}>
+              {category}
+            </Text>
+            <Text style={{ color: colors.textSecondary, fontSize: 13 }}>
+              {duaCount} duas
+            </Text>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor={colors.accent} />
-      <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 24 }}>
-        {/* Search Bar */}
-        <View style={{ 
-          backgroundColor: colors.card, 
-          borderRadius: 10, 
-          paddingHorizontal: 10, 
-          paddingVertical: 10, 
-          marginBottom: 10, 
-          
-        }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Ionicons name="search" size={22} color={colors.textSecondary} />
-            <TextInput
-              placeholder="Search duas by title, meaning, or category..."
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              style={{ 
-                flex: 1, 
-                marginLeft: 15, 
-                color: colors.text, 
-                fontSize: 16,
-                fontWeight: '400'
-              }}
-              placeholderTextColor={colors.textSecondary}
-            />
-            {searchQuery.length > 0 && (
-              <TouchableOpacity onPress={() => setSearchQuery("")} style={{ padding: 4 }}>
-                <Ionicons name="close-circle" size={22} color={colors.textSecondary} />
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-        {/* Categories */}
-        <View style={{ marginBottom: 20, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
-          {categories.map((item) => (
-            <TouchableOpacity
-              key={item}
-              onPress={() => setSelectedCategory(item)}
-              style={{ 
-                backgroundColor: selectedCategory === item ? colors.accent : colors.card, 
-                padding: 10, 
-                marginRight: 5, 
-                marginBottom: 5,
-                borderRadius: 8, 
-                alignItems: 'center', 
-                justifyContent: 'center'
-              }}>
-              <Text
-                style={{ 
-                  color: selectedCategory === item ? "#fff" : colors.textSecondary, 
-                  fontSize: 14, 
-                  fontWeight: 'semibold'
-                }}>
-                {item}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-        {/* Duas List */}
-        <FlatList
-          data={filteredDuas}
-          renderItem={renderDua}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
-        />
+      
+      {/* Header */}
+      <View style={{ 
+        paddingHorizontal: 24, 
+        paddingTop: 24, 
+        paddingBottom: 20,
+        backgroundColor: colors.background,
+      }}>
+        <Text style={{ color: colors.text, fontSize: 32, fontWeight: '700', marginBottom: 8 }}>
+          Duas
+        </Text>
+        <Text style={{ color: colors.textSecondary, fontSize: 16 }}>
+          Daily prayers and supplications
+        </Text>
       </View>
+
+      {/* Category Buttons with ScrollView */}
+      <ScrollView 
+        style={{ flex: 1 }} 
+        contentContainerStyle={{ paddingHorizontal: 24, paddingBottom: 24 }}
+        showsVerticalScrollIndicator={false}
+      >
+        {categories.map(renderCategoryButton)}
+      </ScrollView>
+
+      {/* Modal for Duas */}
+      <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={closeModal}
+      >
+        <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+          <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor={colors.accent} />
+          
+          {/* Modal Header */}
+          <View style={{ 
+            flexDirection: 'row', 
+            alignItems: 'center', 
+            justifyContent: 'space-between',
+            paddingHorizontal: 24, 
+            paddingVertical: 16,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.border + '30',
+            backgroundColor: colors.background
+          }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+              <View style={{ 
+                backgroundColor: colors.accent + '15', 
+                borderRadius: 10, 
+                padding: 8, 
+                marginRight: 12 
+              }}>
+                <Ionicons 
+                  name={categoryIcons[selectedCategory as keyof typeof categoryIcons] as any || "book"} 
+                  size={18} 
+                  color={colors.accent} 
+                />
+              </View>
+              <Text style={{ color: colors.text, fontSize: 18, fontWeight: '600', flex: 1 }}>
+                {selectedCategory}
+              </Text>
+            </View>
+            <TouchableOpacity 
+              onPress={closeModal} 
+              style={{ 
+                padding: 8, 
+                backgroundColor: colors.border + '30', 
+                borderRadius: 12 
+              }}
+            >
+              <Ionicons name="close" size={20} color={colors.text} />
+            </TouchableOpacity>
+          </View>
+
+          {/* Duas List in Modal */}
+          <FlatList
+            data={duas}
+            renderItem={renderDua}
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ padding: 24, paddingBottom: 40 }}
+          />
+        </SafeAreaView>
+      </Modal>
     </SafeAreaView>
   );
 } 

@@ -1,0 +1,592 @@
+[
+  {
+    "number": 1,
+    "arabic": "[Arabic text for verse 1 of surah 44]",
+    "translation": "[English translation for verse 1 of surah 44]",
+    "transliteration": "[Transliteration for verse 1 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 2,
+    "arabic": "[Arabic text for verse 2 of surah 44]",
+    "translation": "[English translation for verse 2 of surah 44]",
+    "transliteration": "[Transliteration for verse 2 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 3,
+    "arabic": "[Arabic text for verse 3 of surah 44]",
+    "translation": "[English translation for verse 3 of surah 44]",
+    "transliteration": "[Transliteration for verse 3 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 4,
+    "arabic": "[Arabic text for verse 4 of surah 44]",
+    "translation": "[English translation for verse 4 of surah 44]",
+    "transliteration": "[Transliteration for verse 4 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 5,
+    "arabic": "[Arabic text for verse 5 of surah 44]",
+    "translation": "[English translation for verse 5 of surah 44]",
+    "transliteration": "[Transliteration for verse 5 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 6,
+    "arabic": "[Arabic text for verse 6 of surah 44]",
+    "translation": "[English translation for verse 6 of surah 44]",
+    "transliteration": "[Transliteration for verse 6 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 7,
+    "arabic": "[Arabic text for verse 7 of surah 44]",
+    "translation": "[English translation for verse 7 of surah 44]",
+    "transliteration": "[Transliteration for verse 7 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 8,
+    "arabic": "[Arabic text for verse 8 of surah 44]",
+    "translation": "[English translation for verse 8 of surah 44]",
+    "transliteration": "[Transliteration for verse 8 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 9,
+    "arabic": "[Arabic text for verse 9 of surah 44]",
+    "translation": "[English translation for verse 9 of surah 44]",
+    "transliteration": "[Transliteration for verse 9 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 10,
+    "arabic": "[Arabic text for verse 10 of surah 44]",
+    "translation": "[English translation for verse 10 of surah 44]",
+    "transliteration": "[Transliteration for verse 10 of surah 44]",
+    "juz": 25,
+    "page": 45,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 11,
+    "arabic": "[Arabic text for verse 11 of surah 44]",
+    "translation": "[English translation for verse 11 of surah 44]",
+    "transliteration": "[Transliteration for verse 11 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 12,
+    "arabic": "[Arabic text for verse 12 of surah 44]",
+    "translation": "[English translation for verse 12 of surah 44]",
+    "transliteration": "[Transliteration for verse 12 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 13,
+    "arabic": "[Arabic text for verse 13 of surah 44]",
+    "translation": "[English translation for verse 13 of surah 44]",
+    "transliteration": "[Transliteration for verse 13 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 14,
+    "arabic": "[Arabic text for verse 14 of surah 44]",
+    "translation": "[English translation for verse 14 of surah 44]",
+    "transliteration": "[Transliteration for verse 14 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 15,
+    "arabic": "[Arabic text for verse 15 of surah 44]",
+    "translation": "[English translation for verse 15 of surah 44]",
+    "transliteration": "[Transliteration for verse 15 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 16,
+    "arabic": "[Arabic text for verse 16 of surah 44]",
+    "translation": "[English translation for verse 16 of surah 44]",
+    "transliteration": "[Transliteration for verse 16 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 17,
+    "arabic": "[Arabic text for verse 17 of surah 44]",
+    "translation": "[English translation for verse 17 of surah 44]",
+    "transliteration": "[Transliteration for verse 17 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 18,
+    "arabic": "[Arabic text for verse 18 of surah 44]",
+    "translation": "[English translation for verse 18 of surah 44]",
+    "transliteration": "[Transliteration for verse 18 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 19,
+    "arabic": "[Arabic text for verse 19 of surah 44]",
+    "translation": "[English translation for verse 19 of surah 44]",
+    "transliteration": "[Transliteration for verse 19 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 20,
+    "arabic": "[Arabic text for verse 20 of surah 44]",
+    "translation": "[English translation for verse 20 of surah 44]",
+    "transliteration": "[Transliteration for verse 20 of surah 44]",
+    "juz": 25,
+    "page": 46,
+    "ruku": 2,
+    "sajda": false
+  },
+  {
+    "number": 21,
+    "arabic": "[Arabic text for verse 21 of surah 44]",
+    "translation": "[English translation for verse 21 of surah 44]",
+    "transliteration": "[Transliteration for verse 21 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 22,
+    "arabic": "[Arabic text for verse 22 of surah 44]",
+    "translation": "[English translation for verse 22 of surah 44]",
+    "transliteration": "[Transliteration for verse 22 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 23,
+    "arabic": "[Arabic text for verse 23 of surah 44]",
+    "translation": "[English translation for verse 23 of surah 44]",
+    "transliteration": "[Transliteration for verse 23 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 24,
+    "arabic": "[Arabic text for verse 24 of surah 44]",
+    "translation": "[English translation for verse 24 of surah 44]",
+    "transliteration": "[Transliteration for verse 24 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 25,
+    "arabic": "[Arabic text for verse 25 of surah 44]",
+    "translation": "[English translation for verse 25 of surah 44]",
+    "transliteration": "[Transliteration for verse 25 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 26,
+    "arabic": "[Arabic text for verse 26 of surah 44]",
+    "translation": "[English translation for verse 26 of surah 44]",
+    "transliteration": "[Transliteration for verse 26 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 27,
+    "arabic": "[Arabic text for verse 27 of surah 44]",
+    "translation": "[English translation for verse 27 of surah 44]",
+    "transliteration": "[Transliteration for verse 27 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 28,
+    "arabic": "[Arabic text for verse 28 of surah 44]",
+    "translation": "[English translation for verse 28 of surah 44]",
+    "transliteration": "[Transliteration for verse 28 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 29,
+    "arabic": "[Arabic text for verse 29 of surah 44]",
+    "translation": "[English translation for verse 29 of surah 44]",
+    "transliteration": "[Transliteration for verse 29 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 30,
+    "arabic": "[Arabic text for verse 30 of surah 44]",
+    "translation": "[English translation for verse 30 of surah 44]",
+    "transliteration": "[Transliteration for verse 30 of surah 44]",
+    "juz": 25,
+    "page": 47,
+    "ruku": 3,
+    "sajda": false
+  },
+  {
+    "number": 31,
+    "arabic": "[Arabic text for verse 31 of surah 44]",
+    "translation": "[English translation for verse 31 of surah 44]",
+    "transliteration": "[Transliteration for verse 31 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 32,
+    "arabic": "[Arabic text for verse 32 of surah 44]",
+    "translation": "[English translation for verse 32 of surah 44]",
+    "transliteration": "[Transliteration for verse 32 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 33,
+    "arabic": "[Arabic text for verse 33 of surah 44]",
+    "translation": "[English translation for verse 33 of surah 44]",
+    "transliteration": "[Transliteration for verse 33 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 34,
+    "arabic": "[Arabic text for verse 34 of surah 44]",
+    "translation": "[English translation for verse 34 of surah 44]",
+    "transliteration": "[Transliteration for verse 34 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 35,
+    "arabic": "[Arabic text for verse 35 of surah 44]",
+    "translation": "[English translation for verse 35 of surah 44]",
+    "transliteration": "[Transliteration for verse 35 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 36,
+    "arabic": "[Arabic text for verse 36 of surah 44]",
+    "translation": "[English translation for verse 36 of surah 44]",
+    "transliteration": "[Transliteration for verse 36 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 37,
+    "arabic": "[Arabic text for verse 37 of surah 44]",
+    "translation": "[English translation for verse 37 of surah 44]",
+    "transliteration": "[Transliteration for verse 37 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 38,
+    "arabic": "[Arabic text for verse 38 of surah 44]",
+    "translation": "[English translation for verse 38 of surah 44]",
+    "transliteration": "[Transliteration for verse 38 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 39,
+    "arabic": "[Arabic text for verse 39 of surah 44]",
+    "translation": "[English translation for verse 39 of surah 44]",
+    "transliteration": "[Transliteration for verse 39 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 40,
+    "arabic": "[Arabic text for verse 40 of surah 44]",
+    "translation": "[English translation for verse 40 of surah 44]",
+    "transliteration": "[Transliteration for verse 40 of surah 44]",
+    "juz": 25,
+    "page": 48,
+    "ruku": 4,
+    "sajda": false
+  },
+  {
+    "number": 41,
+    "arabic": "[Arabic text for verse 41 of surah 44]",
+    "translation": "[English translation for verse 41 of surah 44]",
+    "transliteration": "[Transliteration for verse 41 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 42,
+    "arabic": "[Arabic text for verse 42 of surah 44]",
+    "translation": "[English translation for verse 42 of surah 44]",
+    "transliteration": "[Transliteration for verse 42 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 43,
+    "arabic": "[Arabic text for verse 43 of surah 44]",
+    "translation": "[English translation for verse 43 of surah 44]",
+    "transliteration": "[Transliteration for verse 43 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 44,
+    "arabic": "[Arabic text for verse 44 of surah 44]",
+    "translation": "[English translation for verse 44 of surah 44]",
+    "transliteration": "[Transliteration for verse 44 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 45,
+    "arabic": "[Arabic text for verse 45 of surah 44]",
+    "translation": "[English translation for verse 45 of surah 44]",
+    "transliteration": "[Transliteration for verse 45 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 46,
+    "arabic": "[Arabic text for verse 46 of surah 44]",
+    "translation": "[English translation for verse 46 of surah 44]",
+    "transliteration": "[Transliteration for verse 46 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 47,
+    "arabic": "[Arabic text for verse 47 of surah 44]",
+    "translation": "[English translation for verse 47 of surah 44]",
+    "transliteration": "[Transliteration for verse 47 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 48,
+    "arabic": "[Arabic text for verse 48 of surah 44]",
+    "translation": "[English translation for verse 48 of surah 44]",
+    "transliteration": "[Transliteration for verse 48 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 49,
+    "arabic": "[Arabic text for verse 49 of surah 44]",
+    "translation": "[English translation for verse 49 of surah 44]",
+    "transliteration": "[Transliteration for verse 49 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 50,
+    "arabic": "[Arabic text for verse 50 of surah 44]",
+    "translation": "[English translation for verse 50 of surah 44]",
+    "transliteration": "[Transliteration for verse 50 of surah 44]",
+    "juz": 25,
+    "page": 49,
+    "ruku": 5,
+    "sajda": false
+  },
+  {
+    "number": 51,
+    "arabic": "[Arabic text for verse 51 of surah 44]",
+    "translation": "[English translation for verse 51 of surah 44]",
+    "transliteration": "[Transliteration for verse 51 of surah 44]",
+    "juz": 25,
+    "page": 50,
+    "ruku": 6,
+    "sajda": false
+  },
+  {
+    "number": 52,
+    "arabic": "[Arabic text for verse 52 of surah 44]",
+    "translation": "[English translation for verse 52 of surah 44]",
+    "transliteration": "[Transliteration for verse 52 of surah 44]",
+    "juz": 25,
+    "page": 50,
+    "ruku": 6,
+    "sajda": false
+  },
+  {
+    "number": 53,
+    "arabic": "[Arabic text for verse 53 of surah 44]",
+    "translation": "[English translation for verse 53 of surah 44]",
+    "transliteration": "[Transliteration for verse 53 of surah 44]",
+    "juz": 25,
+    "page": 50,
+    "ruku": 6,
+    "sajda": false
+  },
+  {
+    "number": 54,
+    "arabic": "[Arabic text for verse 54 of surah 44]",
+    "translation": "[English translation for verse 54 of surah 44]",
+    "transliteration": "[Transliteration for verse 54 of surah 44]",
+    "juz": 25,
+    "page": 50,
+    "ruku": 6,
+    "sajda": false
+  },
+  {
+    "number": 55,
+    "arabic": "[Arabic text for verse 55 of surah 44]",
+    "translation": "[English translation for verse 55 of surah 44]",
+    "transliteration": "[Transliteration for verse 55 of surah 44]",
+    "juz": 25,
+    "page": 50,
+    "ruku": 6,
+    "sajda": false
+  },
+  {
+    "number": 56,
+    "arabic": "[Arabic text for verse 56 of surah 44]",
+    "translation": "[English translation for verse 56 of surah 44]",
+    "transliteration": "[Transliteration for verse 56 of surah 44]",
+    "juz": 25,
+    "page": 50,
+    "ruku": 6,
+    "sajda": false
+  },
+  {
+    "number": 57,
+    "arabic": "[Arabic text for verse 57 of surah 44]",
+    "translation": "[English translation for verse 57 of surah 44]",
+    "transliteration": "[Transliteration for verse 57 of surah 44]",
+    "juz": 25,
+    "page": 50,
+    "ruku": 6,
+    "sajda": false
+  },
+  {
+    "number": 58,
+    "arabic": "[Arabic text for verse 58 of surah 44]",
+    "translation": "[English translation for verse 58 of surah 44]",
+    "transliteration": "[Transliteration for verse 58 of surah 44]",
+    "juz": 25,
+    "page": 50,
+    "ruku": 6,
+    "sajda": false
+  },
+  {
+    "number": 59,
+    "arabic": "[Arabic text for verse 59 of surah 44]",
+    "translation": "[English translation for verse 59 of surah 44]",
+    "transliteration": "[Transliteration for verse 59 of surah 44]",
+    "juz": 25,
+    "page": 50,
+    "ruku": 6,
+    "sajda": false
+  }
+]

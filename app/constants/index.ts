@@ -39,27 +39,27 @@ export interface TasbihData {
 }
 
 export const FEATURED_AYAT = [
-  {
-    surah: "Al-Fatiha",
-    ayah: 1,
-    arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
-    translation: "In the name of Allah, the Most Gracious, the Most Merciful.",
-    reference: "Quran 1:1",
-  },
-  {
-    surah: "Al-Baqarah",
-    ayah: 286,
-    arabic: "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا...",
-    translation: "Allah does not burden a soul beyond that it can bear...",
-    reference: "Quran 2:286",
-  },
-  {
-    surah: "Dua for Guidance",
-    ayah: null,
-    arabic: "اللهم اهدني وسددني",
-    translation: "O Allah, guide me and keep me steadfast.",
-    reference: "Prophetic Dua",
-  },
+    {
+      surah: "Al-Fatiha",
+      ayah: 1,
+      arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+      translation: "In the name of Allah, the Most Gracious, the Most Merciful.",
+      reference: "Quran 1:1",
+    },
+    {
+      surah: "Al-Baqarah",
+      ayah: 286,
+      arabic: "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا...",
+      translation: "Allah does not burden a soul beyond that it can bear...",
+      reference: "Quran 2:286",
+    },
+    {
+      surah: "Dua for Guidance",
+      ayah: null,
+      arabic: "اللهم اهدني وسددني",
+      translation: "O Allah, guide me and keep me steadfast.",
+      reference: "Prophetic Dua",
+    },
   {
     surah: "Al-Imran",
     ayah: 8,
@@ -478,43 +478,43 @@ export const BASE_PRAYER_TIMES = [
   },
 ];
 
-export const basePrayerTimes = [
-  {
-    name: "Fajr",
-    arabicName: "الفجر",
-    time: "04:41",
-    icon: "partly-sunny",
-    description: "Dawn Prayer",
-  },
-  {
-    name: "Dhuhr",
-    arabicName: "الظهر",
-    time: "12:04",
-    icon: "sunny-outline",
-    description: "Noon Prayer",
-  },
-  {
-    name: "Asr",
-    arabicName: "العصر",
-    time: "15:14",
-    icon: "partly-sunny-outline",
-    description: "Afternoon Prayer",
-  },
-  {
-    name: "Maghrib",
-    arabicName: "المغرب",
-    time: "18:02",
-    icon: "partly-sunny",
-    description: "Sunset Prayer",
-  },
-  {
-    name: "Isha",
-    arabicName: "العشاء",
-    time: "19:11",
-    icon: "moon-outline",
-    description: "Night Prayer",
-  },
-];
+  export const basePrayerTimes = [
+    {
+      name: "Fajr",
+      arabicName: "الفجر",
+      time: "04:41",
+      icon: "partly-sunny",
+      description: "Dawn Prayer",
+    },
+    {
+      name: "Dhuhr",
+      arabicName: "الظهر",
+      time: "12:04",
+      icon: "sunny-outline",
+      description: "Noon Prayer",
+    },
+    {
+      name: "Asr",
+      arabicName: "العصر",
+      time: "15:14",
+      icon: "partly-sunny-outline",
+      description: "Afternoon Prayer",
+    },
+    {
+      name: "Maghrib",
+      arabicName: "المغرب",
+      time: "18:02",
+      icon: "partly-sunny",
+      description: "Sunset Prayer",
+    },
+    {
+      name: "Isha",
+      arabicName: "العشاء",
+      time: "19:11",
+      icon: "moon-outline",
+      description: "Night Prayer",
+    },
+  ];
 
 // Storage Keys
 export const TASBIH_STORAGE_KEY = "tasbih_data_v3";

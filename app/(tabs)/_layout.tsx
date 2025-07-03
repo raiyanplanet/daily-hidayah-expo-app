@@ -14,18 +14,17 @@ const _layout = () => {
         tabBarStyle: {
           backgroundColor: colors.card,
           borderTopWidth: 0,
-
           height: 85,
           paddingBottom: 20,
           paddingTop: 10,
-          shadowColor: theme === "dark" ? "#000" : "#000",
+          shadowColor: theme === "dark" ? "#000000" : "#000000",
           shadowOffset: {
             width: 0,
-            height: -2,
+            height: -4,
           },
-          shadowOpacity: 0.1,
-          shadowRadius: 3.84,
-          elevation: 5,
+          shadowOpacity: theme === "dark" ? 0.3 : 0.15,
+          shadowRadius: 8,
+          elevation: 12,
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -34,8 +33,6 @@ const _layout = () => {
         },
         headerStyle: {
           backgroundColor: colors.accent,
-
-          shadowColor: "transparent",
         },
         headerTintColor: colors.card,
         headerTitleStyle: {

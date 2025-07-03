@@ -1,0 +1,32 @@
+[
+  {
+    "number": 1,
+    "arabic": "[Arabic text for verse 1 of surah 103]",
+    "translation": "[English translation for verse 1 of surah 103]",
+    "transliteration": "[Transliteration for verse 1 of surah 103]",
+    "juz": 30,
+    "page": 104,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 2,
+    "arabic": "[Arabic text for verse 2 of surah 103]",
+    "translation": "[English translation for verse 2 of surah 103]",
+    "transliteration": "[Transliteration for verse 2 of surah 103]",
+    "juz": 30,
+    "page": 104,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 3,
+    "arabic": "[Arabic text for verse 3 of surah 103]",
+    "translation": "[English translation for verse 3 of surah 103]",
+    "transliteration": "[Transliteration for verse 3 of surah 103]",
+    "juz": 30,
+    "page": 104,
+    "ruku": 1,
+    "sajda": false
+  }
+]

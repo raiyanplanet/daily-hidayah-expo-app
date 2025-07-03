@@ -1,0 +1,62 @@
+[
+  {
+    "number": 2,
+    "arabic": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+    "translation": "All praise is due to Allah, Lord of the worlds.",
+    "transliteration": "Al-hamdu lillahi rabbi al-'alameen",
+    "juz": 1,
+    "page": 1,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 3,
+    "arabic": "الرَّحْمَٰنِ الرَّحِيمِ",
+    "translation": "The Most Gracious, the Most Merciful.",
+    "transliteration": "Ar-rahmani ar-raheem",
+    "juz": 1,
+    "page": 1,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 4,
+    "arabic": "مَالِكِ يَوْمِ الدِّينِ",
+    "translation": "Master of the Day of Judgment.",
+    "transliteration": "Maliki yawmi ad-deen",
+    "juz": 1,
+    "page": 1,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 5,
+    "arabic": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+    "translation": "It is You we worship and You we ask for help.",
+    "transliteration": "Iyyaka na'budu wa iyyaka nasta'een",
+    "juz": 1,
+    "page": 1,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 6,
+    "arabic": "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+    "translation": "Guide us to the straight path.",
+    "transliteration": "Ihdina as-sirata al-mustaqeem",
+    "juz": 1,
+    "page": 1,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 7,
+    "arabic": "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+    "translation": "The path of those upon whom You have bestowed favor, not of those who have evoked [Your] anger or of those who are astray.",
+    "transliteration": "Sirata allatheena an'amta 'alayhim ghayri al-maghdoobi 'alayhim wa la ad-daalleen",
+    "juz": 1,
+    "page": 1,
+    "ruku": 1,
+    "sajda": false
+  }
+] 

@@ -1,0 +1,52 @@
+[
+  {
+    "number": 1,
+    "arabic": "الٓمٓ",
+    "translation": "Alif, Lam, Meem.",
+    "transliteration": "Alif-Lam-Meem",
+    "juz": 1,
+    "page": 2,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 2,
+    "arabic": "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ",
+    "translation": "This is the Book about which there is no doubt, a guidance for those conscious of Allah.",
+    "transliteration": "Thalika al-kitabu la rayba feehi hudan lil-muttaqeen",
+    "juz": 1,
+    "page": 2,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 3,
+    "arabic": "الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ",
+    "translation": "Who believe in the unseen, establish prayer, and spend out of what We have provided for them.",
+    "transliteration": "Allatheena yu'minoona bil-ghaybi wa yuqeemoona as-salata wa mimma razaqnahum yunfiqoon",
+    "juz": 1,
+    "page": 2,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 4,
+    "arabic": "وَالَّذِينَ يُؤْمِنُونَ بِمَا أُنزِلَ إِلَيْكَ وَمَا أُنزِلَ مِن قَبْلِكَ وَبِالْآخِرَةِ هُمْ يُوقِنُونَ",
+    "translation": "And who believe in what has been revealed to you, [O Muhammad], and what was revealed before you, and of the Hereafter they are certain [in faith].",
+    "transliteration": "Wallatheena yu'minoona bima unzila ilayka wa ma unzila min qablika wa bil-akhirati hum yooqinoon",
+    "juz": 1,
+    "page": 2,
+    "ruku": 1,
+    "sajda": false
+  },
+  {
+    "number": 5,
+    "arabic": "أُولَٰئِكَ عَلَىٰ هُدًى مِّن رَّبِّهِمْ ۖ وَأُولَٰئِكَ هُمُ الْمُفْلِحُونَ",
+    "translation": "Those are upon [right] guidance from their Lord, and it is those who are the successful.",
+    "transliteration": "Ula-ika 'ala hudan min rabbihim wa ula-ika humu al-muflihoon",
+    "juz": 1,
+    "page": 2,
+    "ruku": 1,
+    "sajda": false
+  }
+] 
