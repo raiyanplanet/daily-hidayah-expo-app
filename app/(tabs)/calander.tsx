@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useContext, useEffect, useState } from "react";
-import { Animated, Dimensions, SafeAreaView, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Dimensions, Modal, SafeAreaView, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { PRAYER_TUTORIALS } from "../constants/salat";
 import { ThemeContext } from "../theme/ThemeContext";
 
 const { width } = Dimensions.get("window");
@@ -11,6 +12,8 @@ const IslamicCalendar = () => {
   const [hijriDate, setHijriDate] = useState("");
   const [fadeAnim] = useState(new Animated.Value(0));
   const [slideAnim] = useState(new Animated.Value(50));
+  const [salatModalVisible, setSalatModalVisible] = useState(false);
+  const [selectedPrayer, setSelectedPrayer] = useState(0);
 
   // Convert Gregorian to Hijri date
   const getHijriDate = (date: Date) => {
@@ -91,6 +94,21 @@ const IslamicCalendar = () => {
     }
   };
 
+  // Get English Hijri date (full, with day, month, year)
+  const getFullEnglishHijriDate = (date: Date) => {
+    try {
+      return new Intl.DateTimeFormat('en-SA-u-ca-islamic', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        weekday: 'long'
+      }).format(date);
+    } catch (error) {
+      // Fallback calculation (simple)
+      return getEnglishHijriDate(date);
+    }
+  };
+
   useEffect(() => {
     setHijriDate(getHijriDate(currentDate));
     
@@ -154,14 +172,30 @@ const IslamicCalendar = () => {
     }
   ];
 
+  // Returns both Arabic and English Hijri month names
   const getCurrentIslamicMonth = () => {
-    const hijriMonths = [
-      "Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani",
-      "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Sha'ban",
-      "Ramadan", "Shawwal", "Dhu al-Qadah", "Dhu al-Hijjah"
-    ];
-    const month = Math.floor((currentDate.getMonth() + 2) % 12);
-    return hijriMonths[month];
+    let arabic = '';
+    let english = '';
+    try {
+      arabic = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', { month: 'long' }).format(currentDate);
+      english = new Intl.DateTimeFormat('en-SA-u-ca-islamic', { month: 'long' }).format(currentDate);
+    } catch (error) {
+      // Fallback to manual mapping if Intl is not supported
+      const hijriMonthsArabic = [
+        "محرم", "صفر", "ربيع الأول", "ربيع الآخر",
+        "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان",
+        "رمضان", "شوال", "ذو القعدة", "ذو الحجة"
+      ];
+      const hijriMonthsEnglish = [
+        "Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani",
+        "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Sha'ban",
+        "Ramadan", "Shawwal", "Dhu al-Qadah", "Dhu al-Hijjah"
+      ];
+      const month = Math.floor((currentDate.getMonth() + 2) % 12);
+      arabic = hijriMonthsArabic[month];
+      english = hijriMonthsEnglish[month];
+    }
+    return { arabic, english };
   };
 
   const formatDate = (date: Date) => {
@@ -197,14 +231,27 @@ const IslamicCalendar = () => {
                   {formatDate(currentDate)}
                 </Text>
               </View>
-              <TouchableOpacity 
-                style={{ 
-                  backgroundColor: colors.accent + '15', 
-                  borderRadius: 12, 
-                  padding: 10,
-                }}>
-                <Ionicons name="calendar-outline" size={20} color={colors.accent} />
-              </TouchableOpacity>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity 
+                  style={{ 
+                    backgroundColor: colors.accent + '15', 
+                    borderRadius: 12, 
+                    padding: 10,
+                    marginRight: 8,
+                  }}
+                  onPress={() => setSalatModalVisible(true)}
+                >
+                  <Ionicons name="hand-left-outline" size={20} color={colors.accent} />
+                </TouchableOpacity>
+                <TouchableOpacity 
+                  style={{ 
+                    backgroundColor: colors.accent + '15', 
+                    borderRadius: 12, 
+                    padding: 10,
+                  }}>
+                  <Ionicons name="calendar-outline" size={20} color={colors.accent} />
+                </TouchableOpacity>
+              </View>
             </View>
 
             {/* Current Date and Hijri Date */}
@@ -238,7 +285,8 @@ const IslamicCalendar = () => {
                     </Text>
                   </View>
                   <Text style={{ color: colors.textSecondary, fontSize: 10, fontWeight: '500' }}>
-                    {getEnglishHijriDate(currentDate)}
+                    {/* Show English Hijri date below Arabic */}
+                    {getFullEnglishHijriDate(currentDate)}
                   </Text>
                 </View>
               </View>
@@ -278,12 +326,20 @@ const IslamicCalendar = () => {
                   CURRENT MONTH
                 </Text>
               </View>
-              <Text style={{ color: colors.text, fontSize: 18, fontWeight: '700', marginBottom: 6 }}>
-                {getCurrentIslamicMonth()}
-              </Text>
-              <Text style={{ color: colors.textSecondary, fontSize: 14, fontWeight: '500' }}>
-                Islamic lunar month
-              </Text>
+              {/* Show Arabic and English Hijri month */}
+              {(() => {
+                const month = getCurrentIslamicMonth();
+                return (
+                  <View>
+                    <Text style={{ color: colors.text, fontSize: 18, fontWeight: '700', marginBottom: 2 }}>
+                      {month.arabic}
+                    </Text>
+                    <Text style={{ color: colors.textSecondary, fontSize: 14, fontWeight: '600', marginBottom: 6 }}>
+                      {month.english}
+                    </Text>
+                  </View>
+                );
+              })()}
             </View>
           </View>
         </Animated.View>
@@ -406,6 +462,54 @@ const IslamicCalendar = () => {
             </View>
           </View>
         </View>
+
+        {/* Salat Modal */}
+        <Modal
+          visible={salatModalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setSalatModalVisible(false)}
+        >
+          <View style={{ flex: 1, backgroundColor: '#0008', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: colors.card, borderRadius: 24, padding: 24, width: '90%', maxWidth: 400 }}>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                <Text style={{ color: colors.text, fontSize: 20, fontWeight: 'bold' }}>Salat Tutorial</Text>
+                <TouchableOpacity onPress={() => setSalatModalVisible(false)}>
+                  <Ionicons name="close" size={24} color={colors.textSecondary} />
+                </TouchableOpacity>
+              </View>
+              {/* Prayer Tabs */}
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
+                {PRAYER_TUTORIALS.map((prayer, idx) => (
+                  <TouchableOpacity
+                    key={prayer.name}
+                    onPress={() => setSelectedPrayer(idx)}
+                    style={{
+                      paddingVertical: 6,
+                      paddingHorizontal: 10,
+                      borderRadius: 8,
+                      backgroundColor: selectedPrayer === idx ? colors.accent + '22' : 'transparent',
+                      marginHorizontal: 2,
+                    }}
+                  >
+                    <Text style={{ color: selectedPrayer === idx ? colors.accent : colors.textSecondary, fontWeight: '600', fontSize: 13 }}>
+                      {prayer.icon} {prayer.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              {/* Tutorial Content */}
+              <View style={{ marginBottom: 12 }}>
+                <Text style={{ color: colors.text, fontSize: 18, fontWeight: '700', marginBottom: 4 }}>
+                  {PRAYER_TUTORIALS[selectedPrayer].name} <Text style={{ color: colors.textSecondary, fontSize: 16 }}>{PRAYER_TUTORIALS[selectedPrayer].arabic}</Text>
+                </Text>
+                <Text style={{ color: colors.textSecondary, fontSize: 15, lineHeight: 22 }}>
+                  {PRAYER_TUTORIALS[selectedPrayer].tutorial}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     </SafeAreaView>
   );

@@ -403,11 +403,11 @@ export const APP_FEATURES: AppFeature[] = [
   },
   {
     id: "3",
-    name: "Qibla",
-    icon: "compass",
+    name: "Salat",
+    icon: "hand-left-outline",
     color: "bg-orange-500",
     gradient: ["#F97316", "#EA580C"],
-    route: "/qibla",
+    route: "/salat-tutorial-modal",
   },
   {
     id: "4",

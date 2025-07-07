@@ -4,31 +4,31 @@ import { router, useFocusEffect } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
-  Alert,
-  Animated,
-  Dimensions,
-  FlatList,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Animated,
+    Dimensions,
+    FlatList,
+    SafeAreaView,
+    ScrollView,
+    StatusBar,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 import {
-  APP_FEATURES,
-  BASE_PRAYER_TIMES,
-  calculateTimeDifferenceWithSeconds,
-  DAILY_AMAL,
-  DAILY_INSPIRATIONS,
-  FEATURED_AYAT,
-  getCurrentTimeInSeconds,
-  TASBIH_STORAGE_KEY,
-  timeToSeconds,
-  type AppFeature,
-  type PrayerTime,
-  type TasbihData
+    APP_FEATURES,
+    BASE_PRAYER_TIMES,
+    calculateTimeDifferenceWithSeconds,
+    DAILY_AMAL,
+    DAILY_INSPIRATIONS,
+    FEATURED_AYAT,
+    getCurrentTimeInSeconds,
+    TASBIH_STORAGE_KEY,
+    timeToSeconds,
+    type AppFeature,
+    type PrayerTime,
+    type TasbihData
 } from "../constants/index";
 import { ThemeContext } from "../theme/ThemeContext";
 
@@ -188,6 +188,10 @@ export default function IslamicAppHome() {
   };
 
   const handleFeaturePress = (route: string, name: string) => {
+    if (route === '/salat-tutorial-modal') {
+      router.push('/screens/salat');
+      return;
+    }
     try {
       router.push(route as any);
     } catch (error) {
